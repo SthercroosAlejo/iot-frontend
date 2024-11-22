@@ -10,7 +10,7 @@ const EstadoTabla = () => {
 
     useEffect(() => {
         fetchData();
-    }, []);g
+    }, []);
 
     const fetchData = () => {
         try {
