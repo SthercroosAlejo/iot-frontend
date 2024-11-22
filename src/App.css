@@ -1,0 +1,75 @@
+/* Estilos globales */
+:root {
+  --primary-color: #4a90e2;
+  --secondary-color: #f5f8fa;
+  --text-color: #333;
+  --shadow-soft: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  --transition-speed: 0.3s;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  color: var(--text-color);
+  background-color: var(--secondary-color);
+}
+
+/* Contenedor principal */
+.dashboard-container {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  height: 100vh; /* Ocupa toda la altura de la pantalla */
+  padding: 1rem; /* Espaciado interno */
+  box-sizing: border-box; /* Incluye padding en el tamaño */
+}
+
+/* Contenedor de la tabla */
+.estado-tabla {
+  width: 100%; /* Ocupa todo el ancho disponible */
+  max-width: 800px; /* Ancho máximo en pantallas grandes */
+  background: white;
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  margin: 0 auto; /* Centra horizontalmente */
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+/* Tabla */
+table {
+  width: 100%; /* La tabla ocupa todo el ancho disponible */
+  border-collapse: collapse; /* Asegura que las celdas no tengan espacios */
+}
+
+th, td {
+  padding: 1rem; /* Espaciado interno */
+  text-align: left; /* Texto alineado a la izquierda */
+  font-size: 0.95rem; /* Tamaño de fuente */
+  border-bottom: 1px solid #eee; /* Líneas claras entre filas */
+}
+
+th {
+  font-weight: bold; /* Resalta el encabezado */
+}
+
+tr:hover td {
+  background-color: rgba(74, 144, 226, 0.05); /* Fondo al pasar el ratón */
+}
+
+/* Respuesta responsiva */
+@media (max-width: 768px) {
+  .estado-tabla {
+    width: 95%; /* Reduce el ancho en pantallas pequeñas */
+  }
+
+  th, td {
+    padding: 0.75rem; /* Espaciado reducido */
+    font-size: 0.875rem; /* Tamaño de fuente menor */
+  }
+
+  table {
+    white-space: normal; /* Permite que el texto se ajuste en celdas pequeñas */
+  }
+}
