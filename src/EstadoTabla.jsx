@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { database, ref, onValue } from './firebase'; // Configuración de Firebase
@@ -57,52 +56,70 @@ const EstadoTabla = () => {
         );
     }
 
+    // Agrupar los datos por 'id'
+    const groupedData = dataList.reduce((acc, item) => {
+        if (!acc[item.id]) {
+            acc[item.id] = [];
+        }
+        acc[item.id].push(item);
+        return acc;
+    }, {});
+
     return (
         <div className="dashboard-container">
             <div className="estado-tabla">
                 <h2>Estado del Sistema</h2>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Campo</th>
-                        <th>Estado</th>
-                        <th>Fecha y Hora</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {dataList.map((item) => (
-                        <>
-                            <tr key={`${item.id}-puerta`}>
-                                <td>Puerta</td>
-                                <td>
-                    <span className={`badge ${getStatusClass(item.estado_puerta)}`}>
-                      {item.estado_puerta}
-                    </span>
-                                </td>
-                                <td>{item.fecha_hora}</td>
-                            </tr>
-                            <tr key={`${item.id}-sensores`}>
-                                <td>Sensores</td>
-                                <td>
-                    <span className={`badge ${getStatusClass(item.estado_sensores)}`}>
-                      {item.estado_sensores}
-                    </span>
-                                </td>
-                                <td>{item.fecha_hora}</td>
-                            </tr>
-                            <tr key={`${item.id}-movimiento`}>
-                                <td>Movimiento</td>
-                                <td>
-                    <span className={`badge ${getStatusClass(item.estado_movimiento)}`}>
-                      {item.estado_movimiento}
-                    </span>
-                                </td>
-                                <td>{item.fecha_hora}</td>
-                            </tr>
-                        </>
-                    ))}
-                    </tbody>
-                </table>
+                <div className="table-container">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Campo</th>
+                            <th>Estado</th>
+                            <th>Fecha y Hora</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {Object.keys(groupedData).map((id) => (
+                            <React.Fragment key={id}>
+                                <tr className="group-header">
+                                    <td colSpan="3">ID: {id}</td>
+                                </tr>
+                                {groupedData[id].map((item, index) => (
+                                    <React.Fragment key={`${id}-${index}`}>
+                                        <tr>
+                                            <td>Puerta</td>
+                                            <td>
+                          <span className={`badge ${getStatusClass(item.estado_puerta)}`}>
+                            {item.estado_puerta}
+                          </span>
+                                            </td>
+                                            <td>{item.fecha_hora}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sensores</td>
+                                            <td>
+                          <span className={`badge ${getStatusClass(item.estado_sensores)}`}>
+                            {item.estado_sensores}
+                          </span>
+                                            </td>
+                                            <td>{item.fecha_hora}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Movimiento</td>
+                                            <td>
+                          <span className={`badge ${getStatusClass(item.estado_movimiento)}`}>
+                            {item.estado_movimiento}
+                          </span>
+                                            </td>
+                                            <td>{item.fecha_hora}</td>
+                                        </tr>
+                                    </React.Fragment>
+                                ))}
+                            </React.Fragment>
+                        ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );
